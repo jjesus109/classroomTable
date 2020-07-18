@@ -36,7 +36,7 @@ export class UsersService {
      });
   }
   deleteUser(user: Users) {
-    this.usersDoc = this.db.doc(`classrooms/${user.IdUser}`);    
+    this.usersDoc = this.db.doc(`users/${user.IdUser}`);    
     this.usersDoc.delete();
   }
 
@@ -45,7 +45,7 @@ export class UsersService {
   }
 
   updateUser(user: Users) {
-    this.usersDoc = this.db.doc(`user/${user.IdUser}`);
+    this.usersDoc = this.db.doc(`users/${user.IdUser}`);
     this.usersDoc.update(user);
   }
 }

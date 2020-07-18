@@ -93,8 +93,10 @@ export class UsersComponent implements OnInit {
   }
 
   eraseUser(user:Users){
+    console.log("Antes",this.userInsideSchedules);
     // Update this.userInsideSchedules
     this.findInfoUser(user);
+    console.log("Ahora",this.userInsideSchedules);
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'button is-primary',
@@ -121,8 +123,11 @@ export class UsersComponent implements OnInit {
         )
         console.log("Borrado");
         let keys = Object.keys(this.userInsideSchedules);
+        this.userEdit = user;
         keys.forEach(k=>{
           let currentValue = this.userInsideSchedules[k];
+          console.log("currentValue",currentValue[0]);
+          console.log("k",k);
           this.eraseOneClass(currentValue[0],k)
         });
         this._usersService.deleteUser(user);

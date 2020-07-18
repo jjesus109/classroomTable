@@ -1,0 +1,126 @@
+<!-- Starts register section -->
+<section class="hero is-success is-large" >
+    <div class="hero-body create-classroom-background " >
+        <div class="container " *ngIf="emptyData else RegisterData">
+            <div class="columns has-text-centered">
+                <div class="column ">
+                    <div class="container">
+                    <h1 class="title">
+                        Seems that there are not enough data.
+                        </h1>
+                    
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+        
+                    <div class="container">
+                        <a href="/newdata" class="button is-info is-medium">
+                            Register new classroom and user
+                        </a>                    
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+        </div>
+        <!-- Start assign classroom to user -->
+        <ng-template #RegisterData>
+            <div class="columns has-text-centered">
+                <div class="column ">
+                    <div class="container">
+                    <h1 class="title">
+                        Please, select an user and a classroom
+                    </h1>
+                    
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+        
+                    <div class="columns" >
+                        <div class="column is-2"></div>
+                        <div class="column is-3" >                            
+                            <div class="container">
+                                <h1 class="subtitle">
+                                    Classroom data
+                                </h1>
+                                <div class="field">
+                                    <label class="label">Name </label>
+                                    <div class="control">
+                                        <div class="select is-fullwidth" >
+                                            <select name="cr" [(ngModel)]="classRoomSelected">
+                                                <option *ngFor="let class of classroomsGet" [ngValue]="class" (click)="selec(class)">{{class.Name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="label">Schedule</label>
+                                <div class="field">
+                                    <label class="label">Start</label>
+                                    <input type="date" 
+                                    data-date-format="DD/MM/YYYY"
+                                    data-display-mode="dialog" 
+                                    data-is-range="true"
+                                    data-close-on-select="false"
+                                    class="input "
+                                    name="from"
+                                    [(ngModel)]="scheduleSelected.From"
+                                    >
+                                </div>
+                                <div class="field">
+                                    <label class="label">End</label>
+                                    <input type="date" 
+                                    data-date-format="DD/MM/YYYY"
+                                    data-display-mode="dialog" 
+                                    data-is-range="true"
+                                    data-close-on-select="false"
+                                    class="input"
+                                    name="to"
+                                    [(ngModel)]="scheduleSelected.To"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-2"></div>
+                        <div class="column is-3" >
+                            <div class="container">
+                                <h1 class="subtitle">
+                                    User data
+                                </h1>
+                                <div class="field">
+                                    <label class="label">Name and role</label>
+                                    <div class="control">
+                                        <div class="select is-fullwidth" >
+                                            <select name="user" [(ngModel)]="userSelected">
+                                                <option *ngFor="let user of usersGet" [ngValue]="user">{{user.Name}} is {{user.Role}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                    
+                                </div>
+                            </div>
+                        </div>       
+                    
+                    </div>
+                    <div class="container">
+                        <br>                        
+                        <a (click)="assign()" class="button is-info is-medium">
+                            Assign
+                        </a>                    
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <!-- End assign classroom to user -->
+    </div>
+    
+</section>
+  <!-- End register section -->
+  
+  

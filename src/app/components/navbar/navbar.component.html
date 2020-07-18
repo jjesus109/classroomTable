@@ -1,0 +1,37 @@
+<nav class="navbar is-primary">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" [routerLink]="['/']">
+         Classroom schedule
+        </a>
+        <a #navBurger id="navBurger" (click)="tocarNavbar()"  [ngClass] = "{'is-active' : hamClick}"
+        class="navbar-burger burger" data-target="navbarMenuHeroA">
+          <span></span>
+          <span></span>
+          <span></span>
+      </a>
+      </div>
+      <div id="navbarMenuHeroA" class="navbar-menu" #navMenu id="navMenu" (click)="tocarNavbar()" [ngClass] = "{'is-active' : hamClick}">
+        <div class="navbar-end">
+          <a class="navbar-item " [routerLink]="['/']" >
+            Home
+          </a>
+          <a class="navbar-item" [routerLink]="['/classrooms']" >
+            Classroom
+          </a>
+          <a class="navbar-item" [routerLink]="['/users']" >
+            Users
+          </a>
+          <a class="navbar-item" [routerLink]="['/newdata']" >
+            New Data
+          </a>
+          <a class="navbar-item" [routerLink]="['/assign']" >
+            Assign
+          </a>
+        </div>
+        
+      
+        
+      </div>
+    </div>
+  </nav>

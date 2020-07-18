@@ -1,0 +1,169 @@
+<!-- Starts register section -->
+<section class="hero is-warning is-fullheight" >
+    <div class="hero-body" >
+        <div class="container " *ngIf="!emptyData else RegisterData">
+            <div class="columns has-text-centered">
+                <div class="column ">
+                    <div class="container">
+                        <h1 class="title">
+                            Select a classroom for modify it
+                        <br>
+                        <br>
+                        </h1>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="row columns is-multiline is-centered">
+                <div class="column is-one-third" *ngFor="let item of classroomsGet" >
+                    <div class="card">
+                        <div class="card-content has-text-centered">
+                            <p class="title">{{item.Name}}</p>
+                            
+                        </div>
+                        
+                        <div class="container ">
+                            <div class="columns has-text-centered">
+                                <div class="column ">
+                                    <button class="button is-success " (click)="editClass(item)">
+                                        Update
+                                    </button>  
+                                </div>        
+                                <div class="column ">
+                                    <button class="button is-info " (click)="eraseClassroom(item)">
+                                        Delete
+                                    </button>  
+                                </div>        
+                            </div>
+                        </div>
+                    
+                    </div>        
+                </div>
+            </div>
+        </div>
+        <!-- Start nodata classroom to user -->
+        <ng-template #RegisterData>
+            <div class="columns has-text-centered">
+                <div class="column ">
+                    <div class="container">
+                    <h1 class="title">
+                        There's no data, please register new classrooms
+                        </h1>
+                    
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+        
+                    <div class="container">
+                        <br>                        
+                        <a href="/newdata" class="button is-info is-medium">
+                            Assign
+                        </a>                    
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <!-- End nodata classroom to user -->
+    </div>
+    
+</section>
+<!-- Start Modal --> 
+<div class="modal"  [ngClass]="{'is-active' : showModal}">
+<div class="modal-background"></div>
+<div class="modal-card">
+    <header class="modal-card-head">
+    <p class="modal-card-title">Classroom: {{classroomEdit.Name}}</p>
+    <button class="delete" aria-label="close" (click)="cancelUpdate()"></button>
+    </header>
+    <section class="modal-card-body">
+    <div class="card-content">
+        
+        <div class="field">
+            <label class="label">Classroom name</label>
+            <input
+            
+            class="input is-rounded"
+            type="text"
+            placeholder="Classroom name"
+            [(ngModel)]="classroomEdit.Name"
+            name="Name"
+            />
+        </div>
+        <div *ngFor="let sche of classroomEdit.TimeTable,index as i">
+            <br>
+            <label class="title is-5">Schedule {{i+1}} </label>
+            <button class="delete" aria-label="close" (click)="eraseSchedule(sche)"></button>
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Start</label>
+                        <input type="date" 
+                        data-date-format="DD/MM/YYYY"
+                        data-display-mode="dialog" 
+                        data-is-range="true"
+                        data-close-on-select="false"
+                        class="input "
+                        name="from"
+                        [(ngModel)]="sche.From"
+                        >
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">End</label>
+                        <input type="date" 
+                        data-date-format="DD/MM/YYYY"
+                        data-display-mode="dialog" 
+                        data-is-range="true"
+                        data-close-on-select="false"
+                        class="input"
+                        name="to"
+                        [(ngModel)]="sche.To"
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <p class="subtitle">Users inside</p>
+                <div *ngFor="let user of sche.Users">
+                    <li>{{userId[user]}}</li>
+
+                </div>
+
+            </div>
+ 
+        </div>
+    </div>
+    </section>
+    <footer class="modal-card-foot">
+    <div class="columns">
+        <div class="column">
+            <button
+            class="button is-primary"
+            type="button"
+            (click)="updateClassroom()"
+            >
+            Update
+            </button>
+        
+        </div>
+        <div class="column">
+            <button class="button is-success " (click)="cancelUpdate()">
+            Cancel
+            </button>
+        
+        </div>
+
+    </div>
+    
+    </footer>
+</div>
+</div>
+<!-- End modal -->
+
+  
+
+<script type="text/javascript" src="../../../../../../node_modules/bulma-extensions/bulma-calendar/dist/js/bulma-calendar.min.js"></script>

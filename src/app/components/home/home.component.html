@@ -1,0 +1,73 @@
+<!-- Starts hero section -->
+<section class="hero is-primary is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <div class="container">
+            <img src="assets/img/hero-person.svg">
+          </div>
+          
+        </div>
+        <div class="column">
+          <div class="container has-text-centered">
+            <h1 class="title">
+            Get full control of your classroom schedule
+            </h1>
+            
+            <a class="button is-accent is-large" href="/#selection">
+              Get started
+            </a>
+            
+          </div>
+        </div>       
+        
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Ends hero section -->
+<!-- Starts selection section -->
+<section class="hero is-info is-large" id="selection" #selection>
+  <div class="hero-body svg-background">
+    <div class="container ">
+      <div class="columns has-text-centered">
+        <div class="column">
+          <div class="container">
+            <h1 class="title">
+              Which activity you want to do?
+              </h1>
+            <a class="button is-success is-medium"  href="/newdata">
+              Assign classroom
+            </a>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+
+          <div class="columns" >
+            <div class="column" *ngIf="classroomsGet.length!=0">
+              <div class="container">
+              <a class="button is-success is-medium" href="/classrooms">
+                Modify schedule
+              </a>
+            </div>
+            </div>
+            <div class="column" *ngIf="usersGet.length!=0">
+              <div class="container">
+                <a class="button is-success is-medium" href="/users">
+                  Modify users
+                </a>
+                
+              </div>
+            </div>       
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End selection section -->

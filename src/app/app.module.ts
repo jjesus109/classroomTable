@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { NewdataComponent } from './components/newdata/newdata.component';
+import { AssignclassroomComponent } from './components/assignclassroom/assignclassroom.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { NewdataComponent } from './components/newdata/newdata.component';
     SchedulesComponent,
     NotFoundComponent,
     NavbarComponent,
-    NewdataComponent
+    NewdataComponent,
+    AssignclassroomComponent
   ],
   imports: [
     BrowserModule,

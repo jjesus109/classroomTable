@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, KeyValueDiffers } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { Users } from 'src/app/models/users.model';
 import { Classroom } from 'src/app/models/classroom.model';
-
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
   public showModal:boolean = false;
   public userEdit = {} as Users;
   public userId = {};
-  public userInsideSchedules = {};
+  public userInsideSchedules = {} as Object;
   constructor(
     private _usersService: UsersService,
     private _classroomsService: ClassroomService,
@@ -56,6 +56,11 @@ export class UsersComponent implements OnInit {
 
   editUser(user:Users){
     this.userEdit = user;
+    this.findInfoUser(user);
+    console.log("Esto",this.userInsideSchedules);
+    this.showModal = !this.showModal;
+  }
+  findInfoUser(user){
     this.userInsideSchedules =  {};
     // Look for schudules and classrooms inside
     this.classroomsGet.forEach(classroom=>{
@@ -80,10 +85,56 @@ export class UsersComponent implements OnInit {
         }
       });
     });
-    console.log("Esto",this.userInsideSchedules);
+  }
+  eraseClass(time,classroomId){
+    console.log("recibre",time,classroomId);
+    this.eraseOneClass(time,classroomId);
     this.showModal = !this.showModal;
   }
-  eraseClass(classroomId){
+
+  eraseUser(user:Users){
+    // Update this.userInsideSchedules
+    this.findInfoUser(user);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'button is-primary',
+        cancelButton: 'button is-danger'
+      },
+      buttonsStyling: false
+    
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        swalWithBootstrapButtons.fire(
+          'Deleted!',
+          'Classroom has been deleted.',
+          'success'
+        )
+        console.log("Borrado");
+        let keys = Object.keys(this.userInsideSchedules);
+        keys.forEach(k=>{
+          let currentValue = this.userInsideSchedules[k];
+          this.eraseOneClass(currentValue[0],k)
+        });
+        this._usersService.deleteUser(user);
+      } 
+    })
+
+
+
+    
+  }
+
+  eraseOneClass(time,classroomId){
     let classroomToEdit={} as Classroom;
     this.classroomsGet.forEach(classroom=>{
       if(classroom.IdClassroom==classroomId){
@@ -91,17 +142,21 @@ export class UsersComponent implements OnInit {
       }
     });
     classroomToEdit.TimeTable.forEach(element=>{
-      if(element.Users.includes(this.userEdit.IdUser)){
+      if(element.Users.includes(this.userEdit.IdUser)
+        &&element.From == time.From
+        &&element.To == time.To){
+          console.log("AJja");
+          
         let index= element.Users.indexOf(this.userEdit.IdUser)
+        
         element.Users.splice(index,1);
       }
     });
+    console.log("classroomToEdit",classroomToEdit);
     this._classroomsService.updateClassroom(classroomToEdit);
-    this.showModal = !this.showModal;
+    
   }
-  eraseUser(user:Users){
-    this._usersService.deleteUser(user);
-  }
+
   cancelUpdate(){
     this.userEdit = {} as Users;
     this.showModal = !this.showModal;

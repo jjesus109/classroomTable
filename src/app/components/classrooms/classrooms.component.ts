@@ -4,6 +4,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { ClassroomService } from 'src/app/services/classroom.service';
 import { Users } from 'src/app/models/users.model';
 import { Classroom } from 'src/app/models/classroom.model';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-classrooms',
@@ -62,7 +63,34 @@ export class ClassroomsComponent implements OnInit {
     this._classroomsService.updateClassroom(this.classroomEdit);
   }
   eraseClassroom(classroom:Classroom){
-    this._classroomsService.deleteClassroom(classroom);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'button is-primary',
+        cancelButton: 'button is-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        swalWithBootstrapButtons.fire(
+          'Deleted!',
+          'Classroom has been deleted.',
+          'success'
+        )
+        console.log("Borrado");
+        this._classroomsService.deleteClassroom(classroom);
+      } 
+    })
+    
   }
   cancelUpdate(){
     this.classroomEdit = {} as Classroom;
